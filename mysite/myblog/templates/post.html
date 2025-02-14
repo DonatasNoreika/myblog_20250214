@@ -1,18 +1,16 @@
 {% extends "base.html" %}
 
-{% block "title" %}Posts{% endblock %}
+{% block "title" %}Post{% endblock %}
 
 {% block "content" %}
-{% for post in posts %}
 <article class="media content-section">
     <div class="media-body">
         <div class="article-metadata">
             <a class="mr-2">{{ post.author }}</a>
             <small class="text-muted">{{ post.date_created | date:"Y-m-d, f" }}</small>
-            <h2><a class="class-article" href="{% url 'post' post.pk %}">{{ post.title }}</a></h2>
+            <h2><a class="class-article">{{ post.title }}</a></h2>
             <p class="class-content">{{ post.content }}</p>
         </div>
     </div>
 </article>
-{% endfor %}
 {% endblock %}
