@@ -9,6 +9,11 @@ class Post(models.Model):
     date_created = models.DateTimeField(verbose_name="Date Created", auto_now_add=True)
     author = models.ForeignKey(to=User, verbose_name="Author", on_delete=models.CASCADE)
 
+    def comments_count(self):
+        return self.comments.all().count()
+
+    comments_count.short_description = "Comments Count"
+
     class Meta:
         ordering = ["-date_created"]
 
