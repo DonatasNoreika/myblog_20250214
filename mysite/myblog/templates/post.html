@@ -10,6 +10,15 @@
             <small class="text-muted">{{ post.date_created | date:"Y-m-d, f" }}</small>
             <h2><a class="class-article">{{ post.title }}</a></h2>
             <p class="class-content">{{ post.content }}</p>
+            {% if post.comments.all %}
+            <h4>Comments:</h4>
+            {% for comment in post.comments.all %}
+            <small class="text-muted">{{ comment.author }}, {{ comment.date_created | date:"Y-m-d, f" }} </small>
+            <p>{{ comment.content }}</p>
+            {% endfor %}
+            {% else %}
+            <h4>No Comments</h4>
+            {% endif %}
         </div>
     </div>
 </article>
