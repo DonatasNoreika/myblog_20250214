@@ -10,7 +10,7 @@
             <a class="mr-2">{{ post.author }}</a>
             <small class="text-muted">{{ post.date_created | date:"Y-m-d, f" }}</small>
             <h2><a class="class-article" href="{% url 'post' post.pk %}">{{ post.title }}</a></h2>
-            <p class="class-content">{{ post.content }}</p>
+            <p class="class-content">{{ post.content | truncatewords:"30" }} <a href="{% url 'post' post.pk %}">Read More</a></p>
         </div>
     </div>
 </article>
