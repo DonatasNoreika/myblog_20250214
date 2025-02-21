@@ -10,10 +10,29 @@
             <a class="mr-2">{{ post.author }}</a>
             <small class="text-muted">{{ post.date_created | date:"Y-m-d, f" }}</small>
             <h2><a class="class-article" href="{% url 'post' post.pk %}">{{ post.title }}</a></h2>
-            <p class="class-content">{{ post.content | truncatewords:"30" | safe }} <a href="{% url 'post' post.pk %}">Read More</a></p>
+            <p class="class-content">{{ post.content | truncatewords:"30" | safe }} <a href="{% url 'post' post.pk %}">Read
+                More</a></p>
             <p>Comments: {{ post.comments_count }}</p>
         </div>
     </div>
 </article>
 {% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; pirmas</a>
+            <a href="?page={{ page_obj.previous_page_number }}">atgal</a>
+        {% endif %}
+
+        <span class="current">
+            {{ page_obj.number }} iš {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">pirmyn</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">paskutinis &raquo;</a>
+        {% endif %}
+    </span>
+</div>
 {% endblock %}
