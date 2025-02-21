@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 from .my_settings import SECRET_KEY, DEBUG, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -162,3 +163,7 @@ TINYMCE_DEFAULT_CONFIG = {
     'menubar': True,
     'statusbar': True,
     }
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'library/media')
+
+MEDIA_URL = '/media/'

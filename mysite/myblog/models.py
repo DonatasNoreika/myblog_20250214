@@ -26,3 +26,10 @@ class Comment(models.Model):
     date_created = models.DateTimeField(verbose_name="Date Created", auto_now_add=True)
     author = models.ForeignKey(to=User, verbose_name="Author", on_delete=models.CASCADE)
     post = models.ForeignKey(to="Post", verbose_name="Post", on_delete=models.CASCADE, related_name="comments")
+
+
+class Photo(models.Model):
+    photo = models.ImageField(verbose_name="Nuotrauka", upload_to="post_photos")
+
+    def __str__(self):
+        return self.photo.url
