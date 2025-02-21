@@ -17,6 +17,9 @@ class Post(models.Model):
     class Meta:
         ordering = ["-date_created"]
 
+    def __str__(self):
+        return self.title
+
 
 class Comment(models.Model):
     content = models.TextField(verbose_name="Content", max_length=3000)
