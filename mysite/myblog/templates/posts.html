@@ -3,6 +3,7 @@
 {% block "title" %}Posts{% endblock %}
 
 {% block "content" %}
+{% if posts %}
 {% for post in posts %}
 <article class="media content-section">
     <div class="media-body">
@@ -35,4 +36,8 @@
         {% endif %}
     </span>
 </div>
+
+{% else %}
+<h4>Nėra įrašų</h4>
+{% endif %}
 {% endblock %}
