@@ -1,13 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.views import generic
+from django.views.generic.edit import FormMixin
 from .models import Post, Comment
 from django.db.models import Q
 from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.contrib.auth import password_validation
-
+from .forms import CommentForm
 
 # Create your views here.
 class PostListView(generic.ListView):
@@ -36,11 +37,31 @@ class UserCommentListView(LoginRequiredMixin, generic.ListView):
         return Comment.objects.filter(author=self.request.user)
 
 
-class PostDetailView(generic.DetailView):
+class PostDetailView(FormMixin, generic.DetailView):
     model = Post
     template_name = "post.html"
     context_object_name = "post"
+    form_class = CommentForm
 
+    # nurodome, kur atsidursime komentaro sėkmės atveju.
+    def get_success_url(self):
+        return reverse("post", kwargs={"pk": self.object.id})
+
+    # standartinis post metodo perrašymas, naudojant FormMixin, galite kopijuoti tiesiai į savo projektą.
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    # štai čia nurodome, kad knyga bus būtent ta, po kuria komentuojame, o vartotojas bus tas, kuris yra prisijungęs.
+    def form_valid(self, form):
+        form.instance.post = self.object
+        form.instance.author = self.request.user
+        form.save()
+        return super().form_valid(form)
 
 def search(request):
     query = request.GET.get('query')
