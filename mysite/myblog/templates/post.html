@@ -11,6 +11,11 @@
             <small class="text-muted">{{ post.date_created | date:"Y-m-d, f" }}</small>
             <h2><a class="class-article">{{ post.title }}</a></h2>
             <p class="class-content">{{ post.content | safe }}</p>
+            {% if post.author == user %}
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post_update' post.pk %}">Redaguoti</a>
+            </div>
+            {% endif %}
             {% if user.is_authenticated %}
             <div class="fieldWrapper">
                 <hr>
