@@ -147,3 +147,33 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView
 
     def test_func(self):
         return self.get_object().author == self.request.user
+
+
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = Comment
+    template_name = "comment_update.html"
+    # success_url = "/userposts/"
+    fields = ['content']
+
+    def get_success_url(self):
+        return reverse("post", kwargs={"pk": self.get_object().post.pk})
+
+    def test_func(self):
+        return self.get_object().author == self.request.user
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = Comment
+    template_name = "comment_delete.html"
+    # success_url = "/userposts/"
+    context_object_name = "comment"
+
+    def get_success_url(self):
+        return reverse("post", kwargs={"pk": self.get_object().post.pk})
+
+    def test_func(self):
+        return self.get_object().author == self.request.user
