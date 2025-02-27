@@ -3,6 +3,11 @@
 {% block "title" %}Posts{% endblock %}
 
 {% block "content" %}
+{% if user.is_authenticated %}
+<div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post_new' %}">Sukurti įrašą</a>
+</div>
+{% endif %}
 {% if posts %}
 {% for post in posts %}
 <article class="media content-section">
