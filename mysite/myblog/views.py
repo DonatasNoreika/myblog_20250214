@@ -125,8 +125,11 @@ class PostCreateView(LoginRequiredMixin, generic.CreateView):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = Post
     template_name = "post_form.html"
-    success_url = "/userposts/"
+    # success_url = "/userposts/"
     fields = ['title', 'content']
+
+    def get_success_url(self):
+        return reverse("post", kwargs={"pk": self.object.id})
 
     def test_func(self):
         return self.get_object().author == self.request.user
@@ -134,3 +137,13 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = Post
+    success_url = "/userposts/"
+    context_object_name = "post"
+    template_name = "post_delete.html"
+
+    def test_func(self):
+        return self.get_object().author == self.request.user
