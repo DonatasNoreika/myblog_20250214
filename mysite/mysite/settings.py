@@ -12,7 +12,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
-from .my_settings import SECRET_KEY, DEBUG, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, ALLOWED_HOSTS
+from .my_settings import (SECRET_KEY,
+                          DEBUG,
+                          EMAIL_HOST_USER,
+                          EMAIL_HOST_PASSWORD,
+                          ALLOWED_HOSTS,
+                          STATIC_ROOT,
+                          STATICFILES_DIRS)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -172,3 +178,6 @@ MEDIA_URL = '/media/'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+STATICFILES_DIRS = STATICFILES_DIRS
+STATIC_ROOT = STATIC_ROOT
